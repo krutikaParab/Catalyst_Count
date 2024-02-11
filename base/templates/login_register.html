@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block bodycontent %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div>
+                <div class="fs-4 text">
+                    {% if page == 'login-user' %}
+                            <form method="post" action="">
+                              {% csrf_token %}
+                              <br><br>
+                              &nbsp;&nbsp;
+                              <label>Email</label>
+                              <input type="email" name="email" placeholder="Enter Email">
+                              <br><br>
+                              &nbsp;&nbsp;
+                              <label>Password</label>
+                              <input type="password" name="password" placeholder="Enter Password">
+                              &nbsp;&nbsp;
+                              <br><br>
+                                &nbsp;&nbsp;
+                              <input class="btn btn-success" type="submit" value="Login">
+                              <br><br>
+                            <small>Don't have an account? <a href="{% url 'register-user' %}">Sign Up</a></small>
+                            </form>
+                        {% else %}
+                            <br><br>
+                            <form method="post" action="">
+                              {% csrf_token %}
+                              <h3>Sign Up</h3>
+                                <br>
+                              <h5>{{form.username.label}}: {{form.username}}</h5>
+                                <br>
+                              <h5>{{form.email.label}}: {{form.email}}</h5>
+                                <br>
+                              <h5>{{form.password1.label}}: {{form.password1}}</h5>
+                                <br>
+                              <h5>{{form.password2.label}}: {{form.password2}}</h5>
+                                <br>
+                                <input class="btn btn-success" type="submit" value="Register"/>
+                            <br><br>
+                                <small>Already have an account? <a href="{% url 'login-user' %}">Log In</a></small>
+                            </form>
+                        {% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock bodycontent %}

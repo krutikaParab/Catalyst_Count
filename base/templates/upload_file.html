@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block bodycontent %}
+{% if request.user.is_authenticated %}
+            {% include 'navbar.html' %}
+{% endif %}
+<div class="container">
+    <h1>Upload data File</h1>
+      <div class="fs-4 text">
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <input type="button" value="submit" class="btn btn-success">
+        </form>
+  </div>
+</div>
+{% endblock bodycontent%}
