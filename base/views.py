@@ -16,6 +16,8 @@ from chunked_upload.views import ChunkedUploadView, ChunkedUploadCompleteView
 from django.conf import settings
 from django.core import management
 from base.filters import CompanyFilter
+
+
 def login_user(request):
     try:
         page = 'login-user'
@@ -156,7 +158,3 @@ class FileChunkUploadCompleteView(ChunkedUploadCompleteView):
         except Exception as e:
             print(e)
             return HttpResponse("Error while uploading csv data to database {}".format(e))
-
-
-
-
