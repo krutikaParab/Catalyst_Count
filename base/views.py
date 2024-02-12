@@ -2,12 +2,12 @@ import json
 import os
 import shutil
 
+from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from .forms import UserForm, UploadForm
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from .models import User, Company, Upload
 from django.views.generic.base import TemplateView
 from .models import FileChunkUpload
@@ -15,8 +15,7 @@ from django.core.serializers import serialize
 from chunked_upload.views import ChunkedUploadView, ChunkedUploadCompleteView
 from django.conf import settings
 from django.core import management
-from django.core.management.commands import loaddata
-
+from base.filters import CompanyFilter
 def login_user(request):
     try:
         page = 'login-user'
@@ -82,15 +81,40 @@ def get_all_users_and_status(request):
     for user in users:
         user_names_and_status.append({
           "username": user.username,
-          "email": user.email,
+            "email": user.email,
           "status": user.is_active,
         })
     context = {'user_names_and_status': user_names_and_status}
 
     return render(request, 'users_status.html', context=context)
 
+
+def query_builder(request):
+    company_filter = CompanyFilter(request.GET, queryset=Company.objects.all())
+    context = {
+        'form': company_filter.form,
+        'count': company_filter.qs.count()
+            }
+    return render(request, 'company_query.html', context=context)
+
+class CompanyListView(ListView):
+    queryset = Company.objects.all()
+    template_name = 'company_query.html'
+    context_object_name = 'count'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = CompanyFilter(self.request.GET, queryset=queryset)
+        return self.filterset.qs.count()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+       context = super().get_context_data(**kwargs)
+       context['form'] = self.filterset.form
+       return context
+
 class ChunkedUploadDemo(TemplateView):
     template_name = 'upload_file.html'
+
 
 class MyChunkedUploadView(ChunkedUploadView):
     model = FileChunkUpload

@@ -3,100 +3,16 @@
 {% if request.user.is_authenticated %}
             {% include 'navbar.html' %}
 {% endif %}
-<div class="container">
-    <div class="fs-4 text justify-content-center">
-    <form method="post" action="">
-      {% csrf_token %}
-      <br><br>
-      <div class="row">
-        <div class="col-md-4">
-            <div class="btn-group">
-            <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Large button
-            </button>
-            <div class="dropdown-menu">
-               {% for i in industry %}
-                <label class="dropdown-item">{{ i }}</label>
-               {% endfor %}
-            </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-                <div class="btn-group">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Large button
-                </button>
-                <div class="dropdown-menu">
-                   {% for i in year %}
-                    <label class="dropdown-item">{{ i }}</label>
-                   {% endfor %}
-                </div>
-                </div>
-        </div>
+<div class="alert alert-success" role="alert">
+    {{ count }}
+</div>
+<div class="container mt-5 fs-4 text">
 
-        <div class="col-md-4">
-                <div class="btn-group">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Large button
-                </button>
-                <div class="dropdown-menu">
-                   {% for i in city %}
-                    <label class="dropdown-item">{{ i }}</label>
-                   {% endfor %}
-                </div>
-                </div>
-        </div>
-      </div>
-      <br><br>
-      <div class="row">
-        <div class="col-md-4">
-                <div class="btn-group">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Large button
-                </button>
-                <div class="dropdown-menu">
-                   {% for i in country %}
-                    <label class="dropdown-item">{{ i }}</label>
-                   {% endfor %}
-                </div>
-                </div>
-        </div>
-        <div class="col-md-4">
-                <div class="btn-group">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Large button
-                </button>
-                <div class="dropdown-menu">
-                   {% for i in year %}
-                    <label class="dropdown-item">{{ i }}</label>
-                   {% endfor %}
-                </div>
-                </div>
-        </div>
-        <div class="col-md-4">
-                <div class="btn-group">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Large button
-                </button>
-                <div class="dropdown-menu">
-                   {% for i in year %}
-                    <label class="dropdown-item">{{ i }}</label>
-                   {% endfor %}
-                </div>
-                </div>
-        </div>
-      </div>
-      <br><br>
+    <form action="{% url 'query-builder' %}" method="get">
+        {% csrf_token %}
 
-      <div class="row">
-      <div class="col-md-4">
-      <input type="text" placeholder="totalEmployeeCount">
-      </div>
-      </div>
-      <br><br>
-
-        <input type="button" value="Get Count">
+        {{ form.as_p }}
+        <input type="submit" value="GetCount">
     </form>
-  </div>
 </div>
 {% endblock bodycontent %}

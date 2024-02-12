@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from chunked_upload.models import ChunkedUpload
 from django.utils.translation import gettext_lazy as _
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVectorField
+
 
 # Create your models here.
 # Requirements:
@@ -40,19 +43,25 @@ FileChunkUpload = ChunkedUpload
 
 class Company(models.Model):
     name = models.CharField(max_length=100, blank=True)
-    domain = models.CharField(max_length=225, null=True, blank=True)
-    foundationYear = models.IntegerField(null=True, blank=True)
-    industry = models.CharField(max_length=225, null=True, blank=True)
+    domain = models.CharField(max_length=225, null=True, blank=True, db_index=True)
+    foundationYear = models.IntegerField(null=True, blank=True, db_index=True)
+    industry = models.CharField(max_length=225, null=True, blank=True, db_index=True)
     companySize = models.CharField(max_length=225, null=True, blank=True)
-    locality = models.CharField(max_length=225, null=True, blank=True)
-    country = models.CharField(max_length=225, null=True, blank=True)
+    city = models.CharField(max_length=225, null=True, blank=True, db_index=True)
+    state = models.CharField(max_length=225, null=True, blank=True, db_index=True)
+    country = models.CharField(max_length=225, null=True, blank=True, db_index=True)
     linkedin = models.URLField(null=True, blank=True)
     currentEmployeeCount = models.IntegerField(null=True, blank=True)
     totalEmployeeCount = models.IntegerField(null=True, blank=True)
+    search_vector = SearchVectorField(null=True)
 
     class Meta:
         verbose_name = 'Company'
         verbose_name_plural = 'Companies'
+
+        indexes = [
+            GinIndex(fields=["search_vector"]),
+        ]
 
     def __str__(self):
         return self.name

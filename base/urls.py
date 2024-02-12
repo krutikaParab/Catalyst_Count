@@ -12,5 +12,6 @@ urlpatterns = [
     path('chunked-upload-complete/', FileChunkUploadCompleteView.as_view(), name='chunked-upload-complete'),
     path('chunked-upload/', MyChunkedUploadView.as_view(), name='chunked-upload'),
 
-    path('get-all-users-and-status/', views.get_all_users_and_status, name='get-all-users-and-status')
+    path('get-all-users-and-status/', views.get_all_users_and_status, name='get-all-users-and-status'),
+    path('query-builder/', views.query_builder, name='query-builder')
 ]

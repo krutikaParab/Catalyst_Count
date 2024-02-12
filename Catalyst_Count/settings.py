@@ -48,6 +48,8 @@ INSTALLED_APPS = [
 
     # for chunk upload
     'chunked_upload',
+
+    'django_filters',
 ]
 
 # User defined apps
