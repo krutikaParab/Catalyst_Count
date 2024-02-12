@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block bodycontent %}
 
-</body>
-</html>
+
+<div>
+    {% for i in user_names_and_status %}
+
+    {% for user in i.items %}
+    {{user.username}}
+    {{ user.status }}
+
+    {% endfor %}
+    {% endfor %}
+
+</div>
+
+{% endblock bodycontent%}

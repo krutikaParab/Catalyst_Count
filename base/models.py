@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from chunked_upload.models import ChunkedUpload
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 # Requirements:
@@ -31,7 +32,10 @@ class Upload(models.Model):
         verbose_name_plural = 'Uploads'
 
     def __str__(self):
-        return self.file.name
+        return self.file
+
+
+FileChunkUpload = ChunkedUpload
 
 
 class Company(models.Model):

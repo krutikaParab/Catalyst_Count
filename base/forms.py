@@ -12,4 +12,4 @@ class UserForm(UserCreationForm):
 class UploadForm(ModelForm):
     class Meta:
         model = Upload
-        fields = '__all__'
+        fields = ('file',)
