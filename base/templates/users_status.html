@@ -2,10 +2,11 @@
 {% block bodycontent %}
 
 
-<div>
+<div class="container">
     {% for i in user_names_and_status %}
 
     {% for user in i.items %}
+
     {{user.username}}
     {{ user.status }}
 
@@ -13,5 +14,34 @@
     {% endfor %}
 
 </div>
+
+<body>
+  <div class="container mt-5 fs-4 text">
+    <h2>Active User Status</h2>
+    <table class="table fs-4 text">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+            <th scope="col">Email</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for i in user_names_and_status %}
+            <tr>
+                <th scope="row">{{loop.counter}}</th>
+                  <td>{{ i.username }}</td>
+                <td>{{ i.email }}</td>
+                  <td><span class="text-success">{{ i.status }}</span></td>
+            </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+</body>
+
 
 {% endblock bodycontent%}

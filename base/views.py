@@ -82,6 +82,7 @@ def get_all_users_and_status(request):
     for user in users:
         user_names_and_status.append({
           "username": user.username,
+          "email": user.email,
           "status": user.is_active,
         })
     context = {'user_names_and_status': user_names_and_status}
@@ -131,5 +132,7 @@ class FileChunkUploadCompleteView(ChunkedUploadCompleteView):
         except Exception as e:
             print(e)
             return HttpResponse("Error while uploading csv data to database {}".format(e))
+
+
 
 
